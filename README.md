@@ -1,0 +1,1 @@
+# zadanie_6_vmk_khoroshilova
