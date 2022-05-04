@@ -22,8 +22,10 @@ extern double f3 (double x);
 
 
 
-double root (double (* f1) (double x), double (* f2) (double x), double x_left, double x_right, double eps) {
-    while (x_right - x_left >= eps/2) {
+double root (double (* f1) (double x), double (* f2) (double x)) {
+    double x_left = -100;
+    double x_right = 100;
+    while (x_right - x_left >= EPS/2) {
         // printf ("Debug left = %lg, right = %lg, ", x_left, x_right);
         // printf ("\n f2(x_left = %lg\n", f2 (2));
         double val_left = f2(x_left) - f1(x_left);
@@ -56,31 +58,31 @@ double integral (double a, double b, double (* f) (double x)) {
 }
 //addkbabs
 
-int test_root (double (* root) (double (* f1) (double x), double (* f2) (double x), double x_left, double x_right, double eps)) {
+int test_root (double (* root) (double (* f1) (double x), double (* f2) (double x))) {
     int test_errors = 0;
     printf ("-------Testing root------\n");
     //----------------------------------TESTS-------------------------------------------------
-    if (abs(root(f2, f3, -100, 100, EPS) - 0.826218) < EPS) {
+    if (abs(root(f2, f3) - 0.826218) < EPS) {
         printf("Test_1 root passed OK\n");
     }
     else {
-        printf("Test_1 root ERROR. returned = %f, answer = %f\n", root (f2, f3, -100, 100, EPS), 0.826218);
+        printf("Test_1 root ERROR. returned = %f, answer = %f\n", root (f2, f3), 0.826218);
         test_errors += 1;
     }
     //-----------------------------------------------------------------------------------   
-    if (abs(root(f3, f1, -100, 100, EPS) + 1.3079) < EPS) {
+    if (abs(root(f3, f1) + 1.3079) < EPS) {
         printf("Test_2 root passed OK\n");
     }
     else {
-        printf("Test_2 root ERROR. returned = %f, answer = %f\n", root (f3, f1, -100, 100, EPS), -1.3079);
+        printf("Test_2 root ERROR. returned = %f, answer = %f\n", root (f3, f1), -1.3079);
         test_errors += 1;
     }
     //-----------------------------------------------------------------------------------
-    if (abs(root(f2, f1, -100, 100, EPS) - 1.344) < EPS) {
+    if (abs(root(f2, f1) - 1.344) < EPS) {
         printf("Test_3 root passed OK\n");
     }
     else {
-        printf("Test_3 root ERROR. returned = %f, answer = %f\n", root (f2, f1, -100, 100, EPS), 1.344);
+        printf("Test_3 root ERROR. returned = %f, answer = %f\n", root (f2, f1), 1.344);
         test_errors += 1;
     }
     //--------------------------------END_TESTS---------------------------------------------------
@@ -121,9 +123,9 @@ int test_integral (double (*integral) (double a, double b, double (* f) (double 
 
 double square_of_figure (double (* f1) (double x), double (* f2) (double x), double (* f3) (double x)) {
     double S = 0;
-    double x1 = root (f1, f2, -100, 100, EPS);
-    double x2 = root (f1, f3, -100, 100, EPS);
-    double x3 = root (f2, f3, -100, 100, EPS);
+    double x1 = root (f1, f2);
+    double x2 = root (f1, f3);
+    double x3 = root (f2, f3);
     S += integral (x1, x2, f1);
     S += integral (x2, x3, f3);
     S += integral (x3, x1, f2);
