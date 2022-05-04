@@ -1,4 +1,3 @@
-%include "io.inc"
 section .bss
     x resq 1
 section .data
