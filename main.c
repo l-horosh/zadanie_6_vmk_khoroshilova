@@ -24,7 +24,7 @@ extern double f3 (double x);
 
 
 double root (double (* f1) (double x), double (* f2) (double x), double x_left, double x_right, double eps) {
-    while (x_right - x_left >= eps/8) {
+    while (x_right - x_left >= eps) {
         counter += 1;
         // printf ("Debug left = %lg, right = %lg, ", x_left, x_right);
         // printf ("\n f2(x_left = %lg\n", f2 (2));
@@ -144,9 +144,9 @@ int test_integral (double (*integral) (double (* f) (double x), double a, double
 
 double square_of_figure (double (* f1) (double x), double (* f2) (double x), double (* f3) (double x)) {
     double S = 0;
-    double x1 = root (f1, f2, -100, 100, EPS);
-    double x2 = root (f1, f3, -100, 100, EPS);
-    double x3 = root (f2, f3, -100, 100, EPS);
+    double x1 = root (f1, f2, -2, 10, EPS);
+    double x2 = root (f1, f3, -2, 10, EPS);
+    double x3 = root (f2, f3, -2, 10, EPS);
     S += integral (f1, x1, x2, EPS);
     S -= integral (f3, x2, x3, EPS);
     S -= integral (f2, x3, x1, EPS);
@@ -269,13 +269,13 @@ int main(int argc, char *argv[])
     
     // подсчёт итераций
     unsigned int counter12 = 0, counter13 = 0, counter23 = 0;
-    double f1f2 = root(f1, f2, -50, 100, EPS);
+    double f1f2 = root(f1, f2, -2, 10, EPS);
     counter12= counter;
     counter = 0;
-    double f1f3 = root(f1, f3, -1, 2, EPS);
+    double f1f3 = root(f1, f3, -2, 10, EPS);
     counter13 = counter;
     counter = 0;
-    double f2f3 = root(f2, f3, -1000, 1000, EPS);
+    double f2f3 = root(f2, f3, -2, 10, EPS);
     counter23 = counter;
     counter = 0;
 
@@ -302,7 +302,7 @@ int main(int argc, char *argv[])
     if (help + tochki + iteratsii + flagTest == 0) {
         double x = 100;
         // printf ("f = %lg\n", f1 (100.0));
-        printf ("f = %lg\n", f3 (5.0));
+        //printf ("f = %lg\n", f3 (5.0));
         // printf ("f = %lg\n", f1 (100.0));
         //printf("%f %f %f", f1(x), f2(x), f3(x));
         // printf("root 1 = %f \n", root(f1, f2));
