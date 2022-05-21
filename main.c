@@ -144,12 +144,12 @@ int test_integral (double (*integral) (double (* f) (double x), double a, double
 
 double square_of_figure (double (* f1) (double x), double (* f2) (double x), double (* f3) (double x)) {
     double S = 0;
-    double x1 = root (f1, f2, 1, 2, EPS);
+    double x1 = root (f1, f2, -100, 100, EPS);
     double x2 = root (f1, f3, -100, 100, EPS);
     double x3 = root (f2, f3, -100, 100, EPS);
     S += integral (f1, x1, x2, EPS);
-    S += integral (f3, x2, x3, EPS);
-    S += integral (f2, x3, x1, EPS);
+    S -= integral (f3, x2, x3, EPS);
+    S -= integral (f2, x3, x1, EPS);
 
     // double S1 = 0;
     // S1 += integral1 (x1, x2, f1);
@@ -278,15 +278,17 @@ int main(int argc, char *argv[])
     double f2f3 = root(f2, f3, -1000, 1000, EPS);
     counter23 = counter;
     counter = 0;
+
+    if (tochki) {
+       
+        printf("f1(x) = f2(x) <=> x = %lf, znachenie funktsii = %lf\n", f1f2, f1(f1f2));
+        printf("f1(x) = f3(x) <=> x = %lf, znachenie funktsii = %lf\n", f1f3, f1(f1f3));
+        printf("f2(x) = f3(x) <=> x = %lf, znachenie funktsii = %lf\n", f2f3, f2(f2f3));
+    }
     if (iteratsii) {
         printf("%d - iteratsii ot f1(x) = f2(x)\n", counter12);
         printf("%d - iteratsii ot f2(x) = f3(x)\n", counter23);
         printf("%d - iteratsii ot f1(x) = f3(x)\n", counter13);
-    }
-    if (tochki) {
-        printf("f1(x) = f2(x) <=> x = %lf, znachenie funktsii = %lf\n", f1f2, f1(f1f2));
-        printf("f1(x) = f3(x) <=> x = %lf, znachenie funktsii = %lf\n", f1f3, f1(f1f3));
-        printf("f2(x) = f3(x) <=> x = %lf, znachenie funktsii = %lf\n", f2f3, f2(f2f3));
     }
     if (help) {
         printf("-help             - print this message\n");
