@@ -4,7 +4,7 @@
 #include <math.h>
 
 
-const double EPS2 = 0.01;
+const double EPS2 = 0.001;
 
 static int counter = 0;
 extern double f1 (double x);
@@ -81,12 +81,13 @@ double integral (double (* f)(double x), double a, double b, double eps2) {
 }
 //addkbabs
 
-int test_root (double (* root) (double (* f1) (double x), double (* f2) (double x), double x_left, double x_right, double EPS1)) {
+int test_root (double (* root) (double (* f1) (double x), double (* f2) (double x), double x_left, double x_right, double eps1)) {
     int test_errors = 0;
     printf ("-------Testing root------\n");
     //----------------------------------TESTS-------------------------------------------------
     if (abs(root(f2, f3, -100, 100, EPS2/100) - 0.826218) < EPS2/100) {
         printf("Test_1 root passed OK\n");
+        printf ("Root f2f3 = %lg, expected value = %lg\n", root(f2, f3, -100, 100, EPS2/100), 0.826218);
     }
     else {
         printf("Test_1 root ERROR. returned = %f, answer = %f\n", root (f2, f3, -100, 100, EPS2/100), 0.826218);
@@ -95,6 +96,7 @@ int test_root (double (* root) (double (* f1) (double x), double (* f2) (double 
     //-----------------------------------------------------------------------------------   
     if (abs(root(f3, f1, -100, 100, EPS2/100) + 1.3079) < EPS2/100) {
         printf("Test_2 root passed OK\n");
+        printf ("Root f1f3 = %lg, expected value = %lg\n", root(f3, f1, -100, 100, EPS2/100), -1.3079);
     }
     else {
         printf("Test_2 root ERROR. returned = %f, answer = %f\n", root (f3, f1, -100, 100, EPS2/100), -1.3079);
@@ -103,6 +105,7 @@ int test_root (double (* root) (double (* f1) (double x), double (* f2) (double 
     //-----------------------------------------------------------------------------------
     if (abs(root(f2, f1, -100, 100, EPS2/100) - 1.344) < EPS2/100) {
         printf("Test_3 root passed OK\n");
+        printf ("Root f2f1 = %lg, expected value = %lg\n", root(f2, f1, -100, 100, EPS2/100), 1.344);
     }
     else {
         printf("Test_3 root ERROR. returned = %f, answer = %f\n", root (f2, f1, -100, 100, EPS2/100), 1.344);
@@ -118,6 +121,7 @@ int test_integral (double (*integral) (double (* f) (double x), double a, double
     //--------------------------------------TESTS---------------------------------------------
     if (abs(integral (f2, 0, 1, EPS2) - 0.25) < EPS2) {
         printf("Test_1 passed OK\n");
+        printf ("Integral f2 = %lg, expected value = %lg\n", integral (f2, 0, 1, EPS2), 0.25);
     }
     else {
         printf("Test_1 ERROR. returned = %f, answer = %f\n", integral (f2, 0, 1, EPS2), 0.25);
@@ -126,6 +130,7 @@ int test_integral (double (*integral) (double (* f) (double x), double a, double
     //-----------------------------------------------------------------------------------
     if (abs(integral (f3, -2, 5, EPS2) - 5.7257) < EPS2) {
         printf("Test_2 passed OK\n");
+        printf ("Integral f3 = %lg, expected value = %lg\n", integral (f3, -2, 5, EPS2), 5.7257);
     }
     else {
         printf("Test_2 ERROR. returned = %f, answer = %f\n", integral (f3, -2, 5, EPS2), 5.7257);
@@ -134,6 +139,7 @@ int test_integral (double (*integral) (double (* f) (double x), double a, double
     //-----------------------------------------------------------------------------------
     if (abs(integral(f1, 3, 10, EPS2) - 7.88833) < EPS2) {
         printf("Test_3 passed OK\n");
+        printf ("Integral f1 = %lg, expected value = %lg\n", integral(f1, 3, 10, EPS2), 7.88833);
     }
     else {
         printf("Test_3 ERROR. returned = %f, answer = %f\n", integral (f1, 3, 10, EPS2), 7.88833);
@@ -313,6 +319,7 @@ int main(int argc, char *argv[])
         //test_root (root);
         //test_integral(integral);
         printf ("Square = %lg\n", square_of_figure (f1, f2, f3));
+
     }
     return 0;
 }
